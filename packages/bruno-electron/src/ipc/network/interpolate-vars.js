@@ -197,6 +197,7 @@ const interpolateVars = (request, envVariables = {}, runtimeVariables = {}, proc
         request.oauth2.clientId = clientId;
         request.oauth2.clientSecret = clientSecret;
         request.oauth2.scope = scope;
+        request.oauth2.basicAuth = _interpolate(request.oauth2.basicAuth) || false;
         request.data = {
           grant_type: 'client_credentials',
           client_id: clientId,
