@@ -88,12 +88,16 @@ const transformClientCredentialsRequest = async (request) => {
     client_id: clientId,
     client_secret: clientSecret
   };
+  const headers = {
+    Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
+  };
   if (scope) {
     data.scope = scope;
   }
   const url = requestCopy?.oauth2?.accessTokenUrl;
   return {
     data,
+    headers,
     url
   };
 };
