@@ -1,0 +1,21 @@
+meta {
+  name: verify no basic auth token
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{host}}/api/auth/oauth2/client_credentials/resource
+  body: none
+  auth: none
+}
+
+query {
+  token: {{client_credentials_no_basic_auth_token}}
+}
+
+assert {
+  res.status: 200
+  res.body.resource.name: foo
+  res.body.resource.email: foo@bar.com
+} 

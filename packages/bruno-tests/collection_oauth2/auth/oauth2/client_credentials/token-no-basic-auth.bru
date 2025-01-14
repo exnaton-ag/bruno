@@ -1,0 +1,24 @@
+meta {
+  name: token without basic auth
+  type: http
+  seq: 3
+}
+
+post {
+  url: 
+  body: none
+  auth: oauth2
+}
+
+auth:oauth2 {
+  grant_type: client_credentials
+  access_token_url: {{client_credentials_access_token_url}}
+  client_id: {{client_credentials_client_id}}
+  client_secret: {{client_credentials_client_secret}}
+  scope: {{client_credentials_scope}}
+  basicAuth: false
+}
+
+script:post-response {
+  bru.setEnvVar('client_credentials_no_basic_auth_token', res.body.access_token);
+} 
