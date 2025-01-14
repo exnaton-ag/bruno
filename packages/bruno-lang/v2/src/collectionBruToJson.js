@@ -279,6 +279,7 @@ const sem = grammar.createSemantics().addAttribute('ast', {
     const scopeKey = _.find(auth, { name: 'scope' });
     const stateKey = _.find(auth, { name: 'state' });
     const pkceKey = _.find(auth, { name: 'pkce' });
+    const basicAuthKey = _.find(auth, { name: 'basic_auth' });
     return {
       auth: {
         oauth2:
@@ -310,7 +311,8 @@ const sem = grammar.createSemantics().addAttribute('ast', {
                 accessTokenUrl: accessTokenUrlKey ? accessTokenUrlKey.value : '',
                 clientId: clientIdKey ? clientIdKey.value : '',
                 clientSecret: clientSecretKey ? clientSecretKey.value : '',
-                scope: scopeKey ? scopeKey.value : ''
+                scope: scopeKey ? scopeKey.value : '',
+                basicAuth: basicAuthKey ? JSON.parse(basicAuthKey?.value || false) : false
               }
             : {}
       }
