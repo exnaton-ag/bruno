@@ -10,6 +10,10 @@ import { useTheme } from 'providers/Theme/index';
 let posthogClient = null;
 const posthogApiKey = process.env.NEXT_PUBLIC_POSTHOG_API_KEY;
 const getPosthogClient = () => {
+  if (!posthogApiKey) {
+    return null;
+  }
+
   if (posthogClient) {
     return posthogClient;
   }
@@ -64,6 +68,9 @@ const GoldenEdition = ({ onClose }) => {
   useEffect(() => {
     const anonymousId = getAnonymousTrackingId();
     const client = getPosthogClient();
+    if (!client) {
+      return;
+    }
     client.capture({
       distinctId: anonymousId,
       event: 'golden-edition-modal-opened',
@@ -76,6 +83,9 @@ const GoldenEdition = ({ onClose }) => {
   const goldenEditionBuyClick = () => {
     const anonymousId = getAnonymousTrackingId();
     const client = getPosthogClient();
+    if (!client) {
+      return;
+    }
     client.capture({
       distinctId: anonymousId,
       event: 'golden-edition-buy-clicked',

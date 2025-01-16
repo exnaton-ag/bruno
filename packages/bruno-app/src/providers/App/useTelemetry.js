@@ -23,6 +23,10 @@ const isDevEnv = () => {
 };
 
 const getPosthogClient = () => {
+  if (!posthogApiKey) {
+    return null;
+  }
+
   if (posthogClient) {
     return posthogClient;
   }
@@ -53,6 +57,9 @@ const trackStart = () => {
 
   const trackingId = getAnonymousTrackingId();
   const client = getPosthogClient();
+  if (!client) {
+    return;
+  }
   client.capture({
     distinctId: trackingId,
     event: 'start',
