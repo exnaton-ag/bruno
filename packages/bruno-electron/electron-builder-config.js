@@ -9,18 +9,14 @@ const config = {
     output: 'out'
   },
   files: ['**/*'],
-  afterSign: 'notarize.js',
+  // afterSign: 'notarize.js',
   mac: {
     artifactName: '${name}_${version}_${arch}_${os}.${ext}',
     category: 'public.app-category.developer-tools',
     target: [
       {
-        target: 'dmg',
-        arch: ['x64', 'arm64']
-      },
-      {
-        target: 'zip',
-        arch: ['x64', 'arm64']
+        target: 'dir',
+        arch: ['arm64']
       }
     ],
     icon: 'resources/icons/mac/icon.icns',
