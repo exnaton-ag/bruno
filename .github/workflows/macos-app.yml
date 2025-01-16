@@ -61,6 +61,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./packages/bruno-electron/out/bruno_${{ github.event.release.tag_name }}_arm64_mac.dmg
-          asset_name: bruno_${{ github.event.release.tag_name }}_arm64_mac.dmg
+          asset_path: ./packages/bruno-electron/out/mac-arm64/Bruno.app
+          asset_name: Bruno_${{ github.event.release.tag_name }}_mac-arm64.app
           asset_content_type: application/octet-stream
