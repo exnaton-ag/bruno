@@ -11,11 +11,11 @@ const config = {
   files: ['**/*'],
   // afterSign: 'notarize.js',
   mac: {
-    artifactName: '${name}_${version}_${arch}_${os}.${ext}',
+    artifactName: '${name}_${arch}_${os}.${ext}',
     category: 'public.app-category.developer-tools',
     target: [
       {
-        target: 'dir',
+        target: 'dmg',
         arch: ['arm64']
       }
     ],
