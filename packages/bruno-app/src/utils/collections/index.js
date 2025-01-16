@@ -379,7 +379,8 @@ export const transformCollectionToSaveToExportAsFile = (collection, options = {}
                   accessTokenUrl: get(si.request, 'auth.oauth2.accessTokenUrl', ''),
                   clientId: get(si.request, 'auth.oauth2.clientId', ''),
                   clientSecret: get(si.request, 'auth.oauth2.clientSecret', ''),
-                  scope: get(si.request, 'auth.oauth2.scope', '')
+                  scope: get(si.request, 'auth.oauth2.scope', ''),
+                  basicAuth: get(si.request, 'auth.oauth2.basicAuth', false)
                 };
                 break;
             }

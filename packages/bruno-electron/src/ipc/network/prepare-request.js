@@ -137,7 +137,8 @@ const setAuthHeaders = (axiosRequest, request, collectionRoot) => {
               accessTokenUrl: get(request, 'auth.oauth2.accessTokenUrl'),
               clientId: get(request, 'auth.oauth2.clientId'),
               clientSecret: get(request, 'auth.oauth2.clientSecret'),
-              scope: get(request, 'auth.oauth2.scope')
+              scope: get(request, 'auth.oauth2.scope'),
+              basicAuth: get(request, 'auth.oauth2.basicAuth')
             };
             break;
         }

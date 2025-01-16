@@ -20,7 +20,7 @@ const OAuth2ClientCredentials = ({ item, collection }) => {
 
   const handleSave = () => dispatch(saveRequest(item.uid, collection.uid));
 
-  const { accessTokenUrl, clientId, clientSecret, scope } = oAuth;
+  const { accessTokenUrl, clientId, clientSecret, scope, basicAuth } = oAuth;
 
   const handleChange = (key, value) => {
     dispatch(
@@ -34,7 +34,26 @@ const OAuth2ClientCredentials = ({ item, collection }) => {
           clientId,
           clientSecret,
           scope,
+          basicAuth,
           [key]: value
+        }
+      })
+    );
+  };
+
+  const handleBasicAuthToggle = (e) => {
+    dispatch(
+      updateAuth({
+        mode: 'oauth2',
+        collectionUid: collection.uid,
+        itemUid: item.uid,
+        content: {
+          grantType: 'client_credentials',
+          accessTokenUrl,
+          clientId,
+          clientSecret,
+          scope,
+          basicAuth: !Boolean(oAuth?.['basicAuth'])
         }
       })
     );
@@ -62,6 +81,15 @@ const OAuth2ClientCredentials = ({ item, collection }) => {
           </div>
         );
       })}
+      <div className="flex flex-row w-full gap-4" key="basicAuth">
+        <label className="block font-medium">Add Credentials as Basic Auth</label>
+        <input
+          className="cursor-pointer"
+          type="checkbox"
+          checked={Boolean(oAuth?.['basicAuth'])}
+          onChange={handleBasicAuthToggle}
+        />
+      </div>
       <button onClick={handleRun} className="submit btn btn-sm btn-secondary w-fit">
         Get Access Token
       </button>

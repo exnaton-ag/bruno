@@ -82,18 +82,24 @@ const getOAuth2AuthorizationCode = (request, codeChallenge, collectionUid) => {
 const transformClientCredentialsRequest = async (request) => {
   let requestCopy = cloneDeep(request);
   const oAuth = get(requestCopy, 'oauth2', {});
-  const { clientId, clientSecret, scope } = oAuth;
+  const { clientId, clientSecret, scope, basicAuth } = oAuth;
   const data = {
     grant_type: 'client_credentials',
     client_id: clientId,
     client_secret: clientSecret
   };
+  const headers = basicAuth
+    ? {
+        Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
+      }
+    : {};
   if (scope) {
     data.scope = scope;
   }
   const url = requestCopy?.oauth2?.accessTokenUrl;
   return {
     data,
+    headers,
     url
   };
 };

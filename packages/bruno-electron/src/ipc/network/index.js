@@ -297,10 +297,17 @@ const configureRequest = async (
         break;
       case 'client_credentials':
         interpolateVars(requestCopy, envVars, runtimeVariables, processEnvVars);
-        const { data: clientCredentialsData, url: clientCredentialsAccessTokenUrl } =
-          await transformClientCredentialsRequest(requestCopy);
+        const { 
+          data: clientCredentialsData, 
+          url: clientCredentialsAccessTokenUrl,
+          headers: authorizationCodeHeaders 
+        } = await transformClientCredentialsRequest(requestCopy);
         request.method = 'POST';
         request.headers['content-type'] = 'application/x-www-form-urlencoded';
+        request.headers = {
+          ...request.headers,
+          ...authorizationCodeHeaders
+        };
         request.data = clientCredentialsData;
         request.url = clientCredentialsAccessTokenUrl;
         break;
