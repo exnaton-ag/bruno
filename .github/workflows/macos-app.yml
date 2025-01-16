@@ -1,0 +1,53 @@
+name: Release MacOS Build
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+          cache-dependency-path: './package-lock.json'
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      # Build required libraries first
+      - name: Build bruno-common
+        run: npm run build:bruno-common
+
+      - name: Build bruno-query
+        run: npm run build:bruno-query
+
+      - name: Build graphql-docs
+        run: npm run build:graphql-docs
+
+      - name: Bundle JS sandbox libraries
+        run: npm run sandbox:bundle-libraries --workspace=packages/bruno-js
+
+      # Build web app
+      - name: Build web app
+        run: npm run build:web
+
+      # Build electron app for Mac
+      - name: Build electron app
+        run: npm run build:electron:mac
+
+      # Upload the built app as a release asset
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./packages/bruno-electron/out/bruno_${{ github.event.release.tag_name }}_arm64_mac.dmg
+          asset_name: bruno_${{ github.event.release.tag_name }}_arm64_mac.dmg
+          asset_content_type: application/octet-stream
