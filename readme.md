@@ -4,7 +4,7 @@
 - Download the latest release from the assets
 - Open the dmg and drag the app to the applications folder
 - Unlock the unsigned app by removing the xattr: `xattr -c /Applications/Bruno.app`
--Double click the app to run it
+- Double click the app to run it
 
 ## Original Readme
 <br />
